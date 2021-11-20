@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Upload To Fimple</title>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Fimple,Search,files,file">
+	<meta name="Author" content="Seis Bolado">
+	<link id="Style_F" rel="stylesheet" href="./Style_F.css">
+</head>
+<body>
+	<script> 
+function PegarDados(){
+	valor = "{" + document.getElementById("File URL").value +
+	"," + document.getElementById("File Name").value + "," +
+	document.getElementById("File Description").value + "}"
+	return valor;
+}
+
+function processData(data){
+const regex = new RegExp(document.getElementById("palChav").value);
+var result;
+var indices = [];
+var resultados = [];
+var del = 0;
+console.log(regex)
+console.log(document.getElementById("palChav").value)
+console.log(data)
+console.log(regex.exec(data))
+console.log(data.lastIndexOf(document.getElementById("palChav").value))
+while (del !== data.lastIndexOf(document.getElementById("palChav").value) /*93*/) {del = data.indexOf(document.getElementById("palChav").value, del+1);indices.push(del);console.log(del);}
+
+console.log(indices);
+for( var item in indices){
+item = indices[item];
+resultados.push(
+	data.substring( 
+		data.substring(0, item).lastIndexOf("{"), 
+		data.substring(item).indexOf("}")+1+item
+));}
+console.log(resultados);
+return resultados;
+}
+
+function showData(resultados){
+console.log(resultados)
+function criarTabela(conteudo) {
+  var tabela = document.createElement("table");
+  var thead = document.createElement("thead");
+  var tbody=document.createElement("tbody");
+  var thd = function(i){return (i==0)?"th":"td";};
+  for (var i=0;i<conteudo.length;i++) {
+    var tr = document.createElement("tr");
+    for(var o=0;o<conteudo[i].length;o++){
+      var t = document.createElement(thd(i));
+      var texto = document.createTextNode(conteudo[i][o]);
+      t.appendChild(texto);
+      tr.appendChild(t);
+    }
+    (i==0)?thead.appendChild(tr):tbody.appendChild(tr);
+  }
+  tabela.appendChild(thead);
+  tabela.appendChild(tbody);
+  return tabela;
+}
+tableArray = [
+  [ "URL", "Name", "Description" ]
+]
+for (item in resultados) {
+	item = resultados[item]
+	console.log(item)
+	objeto = []
+	URL = item.substring(1, item.indexOf(","))
+	Nome = item.substring(item.indexOf(",")+1, item.indexOf(",", item.indexOf(",")+1))
+	Description = item.substring(item.indexOf(",", item.indexOf(",")+1)+1, item.length-1)
+	objeto.push(URL)
+	objeto.push(Nome)
+	objeto.push(Description)
+	tableArray.push(objeto)
+	console.log(objeto)
+	}
+console.log(tableArray);
+document.getElementById("tabela").appendChild(criarTabela(tableArray));
+}
+
+
+function uploadToDatabase(){
+	window.top.postMessage(PegarDados(), '*');
+	window.top.postMessage("Z", '*');
+}
+function search(){
+var response;
+window.top.postMessage("L", '*');
+window.onmessage = function(e){
+response = JSON.parse(JSON.stringify(e.data));
+console.log(JSON.parse(JSON.stringify(e.data)))
+console.log(response);
+showData(processData(response));
+}
+}
+</script> 
+	<div class ="uploadF">
+	<div class="brecha"><a href = "./Index_F.html"><p>Brecha</p></a></div>
+	<a>Para pubicar para a rede, contate-nos no email: brechacompanybr@gmail.com</a>
+	<table class="Upload-table" align='center'>
+		<tr>
+			<td>Link da Imagem:</td>
+			<td><input type="text" id="File URL"></td>
+		</tr>
+		
+		<tr>
+			<td>Produto:</td>
+			<td><input type="text" id="File Name"></td>
+		</tr>
+		
+		<tr>
+		  <td>Descrição:</td>
+		  <td><textarea name="description" id="File Description" rows="2" cols="20"></textarea></td>
+		</tr>
+	</table>
+	</div>
+	<input id="Upload File" class = "UploadB" type="button" value="Faça o Upload pra Brecha"  onclick="uploadToDatabase()";/>
+</body>
+</html>
