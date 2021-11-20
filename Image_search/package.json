@@ -2,7 +2,7 @@
   "name": "video-maker-marcelo",
   "version": "1.0.0",
   "description": "Projeto open source para fazer vídeos automatizados, adaptação para dispositivos móveis.",
-  "main": "xis.js",
+  "main": "index.js",
   "scripts": {
     "start": "node .",
     "test": "nodemon ."
