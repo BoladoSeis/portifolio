@@ -1,0 +1,1 @@
+A CryptoCoin é um projeto especifico dentro das MathCoins, que são criptomoedas que executam funções matemáticas arbitrárias, neste caso buscam por novos números primos ainda não registrados na blockchain. Devido a falta de tempo, a conexão aberta necessária para os servidores funcionarem ainda não foi executada, dessa forma ainda não foi colocada em teste prático
