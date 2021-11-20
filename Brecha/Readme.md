@@ -1,1 +1,1 @@
-This
+A Brecha foi um projeto de um CRUD, no entanto a base de dados era um .txt e ela apenas Cria e Lê. É um app desenvolvido num ambiente Electrum, onde a visão é feita em HTML (css e js), o controle em JS e o modelo em Nodejs.
