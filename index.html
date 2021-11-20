@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title class = "title1">Fimple</title>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Fimple,Search,files,file">
+	<meta name="Author" content="Seis Bolado">
+	<link id="Style_F" rel="stylesheet" href="">
+</head>
+
+<body>
+<div id = "indexpralixo">
+	<div class = "div1">Choose your filter:</div>
+    
+	<input id='Filter' type='text' value='./Fimple_Filter' placeholder ="Write your filter address..." class = "filterAdd"/>
+	<input id="Use Filter" type="button" value="Use Filter" class="filterUse"/>
+	
+	<div>
+		<a href = "./Info.html" class = "Info">Click here to know more about Fimple and Filters</a>
+	</div>
+	
+</div>
+	<iframe id="Page" src="" width="100%" height="100%"  frameborder="0" class = "iframe"/></iframe>
+	<script id="script" src=""></script>
+	<script> 
+		document.getElementById("Use Filter").onclick = function () {
+		document.getElementById("Page").setAttribute("src", document.getElementById('Filter').value + "/Index_F.html");
+		document.getElementById("script").setAttribute("src", document.getElementById('Filter').value + "/Main_F.html");
+		document.getElementById('Style_F').setAttribute("href",  document.getElementById('Filter').value + "/Style_F.css");
+		};
+		
+	window.onmessage = function(e){
+		if (e.data[0] == "/"){
+		document.getElementById("Page").setAttribute("src", document.getElementById('Filter').value + e.data);
+    } 	else if(e.data[0] == "M"){
+		document.getElementById("indexpralixo").style.display = 'none';
+	}
+	else{
+	window.api.send("toMain", e.data);
+	}}
+	window.api.receive("fromMain", (data) => {	
+	document.getElementById("Page").contentWindow.postMessage(data);
+	console.log(data);
+	});
+	</script>
+
+</body>
+</html>
